@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="Style.css">
+    <script src="https://kit.fontawesome.com/e6889ed502.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="musicPlayer">
+            <nav>
+                <div class="iconTop">
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <div class="iconTop">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+
+            <img src="Images/img.jpg" class="songImage" width="200em">
+
+            <h1>Elite Music</h1>
+            <p>Created by (Audio Series)</p>
+
+            <audio id="song">
+                <source id="songs" src="1.mp3" type="audio/mp3">
+            </audio>
+
+            <div class="time"></div>
+
+            <input type="range" value="0" id="progress">
+
+            <div class="iconBottom">
+                <div class="btn"><i class="fa-solid fa-backward" id="backward"></i></div>
+                <div class="btn" onclick="playPause()"><i class="fa-solid fa-play" id="ctrIcon"></i></div>
+                <div class="btn"><i class="fa-solid fa-forward" id="forward"></i></div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+
+        let progress = document.getElementById('progress');
+        let song = document.getElementById('song');
+        let ctrIcon = document.getElementById('ctrIcon');
+
+        document.getElementById('songs').setAttribute('src', Math.ceil(Math.random() * 2) + '.mp3');
+
+
+        song.onloadedmetadata = function () {
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+
+        }
+
+        function playPause() {
+            if (ctrIcon.classList.contains('fa-pause')) {
+                song.pause();
+                ctrIcon.classList.remove('fa-pause');
+                ctrIcon.classList.add('fa-play');
+            }
+
+            else {
+                song.play();
+                ctrIcon.classList.remove('fa-play');
+                ctrIcon.classList.add('fa-pause');
+            }
+        }
+
+        if (song.play) {
+            setInterval(function () {
+                progress.value = song.currentTime;
+            }, 500);
+        }
+
+        progress.onchange = function () {
+            song.currentTime = progress.value;
+        }
+
+        song.onended = function () {
+            ctrIcon.classList.remove('fa-pause');
+            ctrIcon.classList.add('fa-play');
+        }
+
+
+    </script>
+</body>
+
+</html>
